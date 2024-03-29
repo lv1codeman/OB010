@@ -134,7 +134,7 @@ def weekToChinese(week):
         case "7":
             return "日"
         case _:
-            return Exception("week not matach a valid value.")
+            return ""
 
 
 # 獨立執行util.py時才會執行，若util.py作為模組被呼叫使用則不執行

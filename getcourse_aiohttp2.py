@@ -15,10 +15,8 @@ async def load_into_db(year="112", semester="2"):
     ) as day_course_response:
         html_data = await day_course_response.text()
         day_course_rows = BeautifulSoup(html_data, "html.parser").find_all("tr")
-
         # 提取表格頭（th）和數據（columns）
         th_row = day_course_rows[0].find_all("th")
-        # columns_row = day_course_rows[1].find_all("td")
 
         conn = sqlite3.connect("database.sqlite3")
         c = conn.cursor()
@@ -58,9 +56,8 @@ async def selectdb(
     tchnm="",
     week="",
 ):
-    print(week)
     weekch = weekToChinese(week)
-    print(weekch)
+    # print(crslimit)
     conn = sqlite3.connect("database.sqlite3")
     cursor = conn.cursor()
     query = """
@@ -86,8 +83,10 @@ async def selectdb(
 
     query += f" AND 課程名稱 like '%{crsnm}%'"
     query += f" AND 教師姓名 like '%{tchnm}%'"
-    query += f" AND 上課節次地點 like '%({weekch}) %'"
+    if weekch != "":
+        query += f" AND 上課節次地點 like '%({weekch}) %'"
 
+    # print(query)
     cursor.execute(query)
     res = cursor.fetchall()
 
