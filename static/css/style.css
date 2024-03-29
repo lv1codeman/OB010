@@ -10,6 +10,12 @@ body {
   border-radius: 8px;
 }
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .grid-container {
   max-width: 800px;
   display: grid;
@@ -25,6 +31,8 @@ body {
 }
 
 .grid-item:nth-child(3) {
+  gap: 20px;
+  flex-direction: row;
   grid-row: span 1;
   background-color: transparent;
   border: none;
