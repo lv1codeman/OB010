@@ -8,6 +8,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../static/css/style.css">
+  <script src="../static/script.js"></script>
 </head>
 
 <body>
@@ -136,13 +137,18 @@
         <!-- Dynamic content will be added here -->
       </tbody>
     </table>
+    <!-- <script>
+      getCourseData();
+    </script> -->
     <script>
+
       $(document).ready(function () {
+
+        // 透過後端的/getYS執行selectdb1，搜尋DB中的第一筆資料，以它的學年度學期，設定前端網頁的學年度學期
         $.ajax({
           url: '/getYS',
           type: 'GET',
           success: function (data) {
-            // 透過後端的/getYS執行selectdb1，搜尋DB中的第一筆資料，以它的學年度學期，設定前端網頁的學年度學期
             $('#dataTimeIndicator').text('目前資料為' + data.year + '-' + data.semester);
             $("#year option:contains(" + data.year + ")").attr('selected', 'selected');
             $("#semester option:contains(" + data.semester + ")").attr('selected', 'selected');
@@ -153,6 +159,7 @@
             $('#result').text('Error: ' + errorMessage);
           }
         });
+        // 獲取初始的開課班級列表
         $.ajax({
           url: 'http://webapt.ncue.edu.tw/DEANV2/Other/ob010/GetJson_ddl_scj_cls_id' + '?year=' + $('#year').val() + '&smester=' + $('#semester').val() + '&CLS_BRANCH=' + 'D',
           type: "Get",
@@ -161,8 +168,12 @@
         });
         $('#resultTable').hide()
 
+        $('#gatherBtn').click(function () {
+          getCourseData();
+        });
+
         $("#year,#semester").change(function () {
-          console.log('gatherClsBtn clicked!')
+          getCourseData();
           $.ajax({
             url: 'http://webapt.ncue.edu.tw/DEANV2/Other/ob010/GetJson_ddl_scj_cls_id' + '?year=' + $('#year').val() + '&smester=' + $('#semester').val() + '&CLS_BRANCH=' + 'D',
             type: "Get",
@@ -196,39 +207,7 @@
           $('#hint').text('');
         });
 
-        $('#gatherBtn').click(function () {
-          var year = $('#year').find(':selected').text();
-          var semester = $('#semester').find(':selected').text();
-          var dataJSON = {};
-          dataJSON["year"] = year;
-          dataJSON["semester"] = semester;
-          $('*').css('cursor', 'wait');
-          $('*').css('pointer-events', 'none');
-          $('#hint').text('正在從OB010讀取資料(約需15秒左右等待時間)...');
-          $('#hint').css('color', 'orange');
-          console.log('start gathering data...')
-          $.ajax({
-            url: '/getdata',
-            type: 'POST',
-            data: JSON.stringify(dataJSON), // 将JavaScript对象转换为JSON字符串
-            contentType: "application/json; charset=utf-8", // 指定请求内容类型为JSON
-            dataType: "json", // 指定响应数据类型为JSON
-            success: function (data) {
-              console.log(data.message + data.executeTime);
-              $('*').css('cursor', 'auto');
-              $('*').css('pointer-events', 'auto');
-              $('button').css('cursor', 'pointer');
-              $('#hint').css('color', 'green');
-              $('#hint').text('已從OB010讀取所有課程，共花費' + data.executeTime + '秒。');
-              console.log(' 已從OB010讀取所有課程，共花費' + data.executeTime + '秒。');
-              $('#dataTimeIndicator').text('目前資料為' + year + '-' + semester);
-            },
-            error: function (xhr, status, error) {
-              var errorMessage = xhr.status + ': ' + xhr.statusText;
-              $('#result').text('Error: ' + errorMessage);
-            }
-          });
-        });
+
         $('#searchBtn').click(function () {
           var dataJSON = {};
           dataJSON["year"] = $('#year').find(':selected').text();
