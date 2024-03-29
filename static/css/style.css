@@ -18,9 +18,20 @@ body {
   margin-bottom: 20px;
 }
 
+
 .grid-item {
   display: flex;
   flex-direction: column;
+}
+
+.grid-item:nth-child(3) {
+  grid-row: span 1;
+  background-color: transparent;
+  border: none;
+}
+
+.gird-overnext {
+  grid-column: span 2;
 }
 
 label {

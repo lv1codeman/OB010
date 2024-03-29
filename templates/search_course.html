@@ -15,7 +15,6 @@
 
   <!-- <button class="btn btn-primary" id="gatherClsBtn">取得班級資料</button> -->
   <div class="container">
-    <p>請先取得學年學期的資料，再開始查詢，否則預設為112學年度第2學期的資料。</p>
     <div class="grid-container">
       <div class="grid-item">
         <label for="year">學年度</label>
@@ -40,28 +39,7 @@
           <option value="1">1</option>
         </select>
       </div>
-      <div class="grid-item">
-        <label id="dataTimeIndicator">目前資料為112-2</label>
-        <button class="btn btn-primary" id="gatherBtn">取得課程資料</button>
-      </div>
-      <div class="separator"></div>
-      <div class="grid-item">
-        <label for="crsclass">開課班別</label>
-        <select id="crsclass">
-          <!-- 由OB010導入 -->
-          <option value="space" selected></option>
-        </select>
-      </div>
-      <div class="grid-item">
-        <label for="crslimit">可跨班系</label>
-        <select id="crslimit">
-          <!-- 由OB010導入 -->
-          <option value></option>
-          <option value="限本班">限本班</option>
-          <option value="限本系">限本系</option>
-          <option value="可跨班系">可跨班系</option>
-        </select>
-      </div>
+      <div class="grid-item"></div>
       <div class="grid-item">
         <label for="week">上課時間</label>
         <select id="week">
@@ -93,17 +71,35 @@
         </select>
       </div>
       <div class="grid-item">
-        <label for="crsid">課程代碼</label>
-        <input type="text" id="crsid">
+        <label for="crsclass">開課班別</label>
+        <select id="crsclass">
+          <!-- 由OB010導入 -->
+          <option value="space" selected></option>
+        </select>
       </div>
       <div class="grid-item">
-        <label for="crsnm">課程名稱</label>
-        <input type="text" id="crsnm">
+        <label for="crslimit">可跨班系</label>
+        <select id="crslimit">
+          <!-- 由OB010導入 -->
+          <option value></option>
+          <option value="限本班">限本班</option>
+          <option value="限本系">限本系</option>
+          <option value="可跨班系">可跨班系</option>
+        </select>
       </div>
       <div class="grid-item">
         <label for="tchnm">教師姓名</label>
         <input type="text" id="tchnm">
       </div>
+      <div class="grid-item">
+        <label for="crsid">課程代碼</label>
+        <input type="text" id="crsid">
+      </div>
+      <div class="grid-item gird-overnext">
+        <label for="crsnm">課程名稱</label>
+        <input type="text" id="crsnm">
+      </div>
+      <div class="grid-item"></div>
     </div>
     <div style="display: ruby-text;">
       <button class="btn btn-success" id="searchBtn">Search</button>
@@ -167,10 +163,6 @@
           success: SetValue
         });
         $('#resultTable').hide()
-
-        $('#gatherBtn').click(function () {
-          getCourseData();
-        });
 
         $("#year,#semester").change(function () {
           getCourseData();
