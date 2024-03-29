@@ -142,10 +142,8 @@
           url: '/getYS',
           type: 'GET',
           success: function (data) {
-            $('#dataTimeIndicator').text('目前資料為' + data.year + '-' + data.semester);
             $("#year option:contains(" + data.year + ")").attr('selected', 'selected');
             $("#semester option:contains(" + data.semester + ")").attr('selected', 'selected');
-            console.log('目前資料為' + data.year + '-' + data.semester);
           },
           error: function (xhr, status, error) {
             var errorMessage = xhr.status + ': ' + xhr.statusText;
@@ -171,11 +169,8 @@
           });
         });
         function SetValue(data) {
-          console.log('SetValue start...')
-          console.log(data)
           //取得已設定班級
           var selected = $('#crsclass option:selected').val();
-          console.log('selected=' + selected)
           //清空舊班級
           $('#crsclass').empty();
           for (var i = 0; i < data.length; i++) {
