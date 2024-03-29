@@ -12,8 +12,6 @@
 </head>
 
 <body>
-
-  <!-- <button class="btn btn-primary" id="gatherClsBtn">取得班級資料</button> -->
   <div class="container">
     <div class="grid-container">
       <div class="grid-item">
@@ -133,13 +131,9 @@
         <!-- Dynamic content will be added here -->
       </tbody>
     </table>
-    <!-- <script>
-      getCourseData();
-    </script> -->
     <script>
 
       $(document).ready(function () {
-
         // 透過後端的/getYS執行selectdb1，搜尋DB中的第一筆資料，以它的學年度學期，設定前端網頁的學年度學期
         $.ajax({
           url: '/getYS',
@@ -191,14 +185,12 @@
           $('#crsclass option[value=' + selected + ']').attr('selected', true);
         }
 
-
         $('#clearBtn').click(function () {
           $('#resultTable').hide();
           $('#crsclass,#crslimit,#week,#isAllEng,#isDisLearn').val('');
           $('#crsid,#crsnm,#tchnm').val('');
           $('#hint').text('');
         });
-
 
         $('#searchBtn').click(function () {
           var dataJSON = {};
@@ -259,7 +251,8 @@
             }
           });
         });
-      });
+
+      });// END: $(document).ready 
     </script>
   </div>
 </body>
