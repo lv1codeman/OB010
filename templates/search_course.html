@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Page</title>
+  <title>查詢課程</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../static/css/style.css">
@@ -49,7 +49,6 @@
         <select id="crsclass">
           <!-- 由OB010導入 -->
           <option value="space" selected></option>
-          <option value="輔碩二">輔碩二</option>
         </select>
       </div>
       <div class="grid-item">
@@ -101,7 +100,7 @@
         <input type="text" id="crsnm">
       </div>
       <div class="grid-item">
-        <label for="tchnm">教師姓名 羅家玲</label>
+        <label for="tchnm">教師姓名</label>
         <input type="text" id="tchnm">
       </div>
     </div>
@@ -153,6 +152,12 @@
             var errorMessage = xhr.status + ': ' + xhr.statusText;
             $('#result').text('Error: ' + errorMessage);
           }
+        });
+        $.ajax({
+          url: 'http://webapt.ncue.edu.tw/DEANV2/Other/ob010/GetJson_ddl_scj_cls_id' + '?year=' + $('#year').val() + '&smester=' + $('#semester').val() + '&CLS_BRANCH=' + 'D',
+          type: "Get",
+          dataType: "json",
+          success: SetValue
         });
         $('#resultTable').hide()
 
