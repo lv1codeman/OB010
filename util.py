@@ -117,6 +117,26 @@ def getSyllabusColumns(result, hasCHT, hasENG):
     return output
 
 
+def weekToChinese(week):
+    match week:
+        case "1":
+            return "一"
+        case "2":
+            return "二"
+        case "3":
+            return "三"
+        case "4":
+            return "四"
+        case "5":
+            return "五"
+        case "6":
+            return "六"
+        case "7":
+            return "日"
+        case _:
+            return Exception("week not matach a valid value.")
+
+
 # 獨立執行util.py時才會執行，若util.py作為模組被呼叫使用則不執行
 if __name__ == "__main__":
     print(is_contain_chinese.__doc__)

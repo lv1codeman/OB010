@@ -3,7 +3,7 @@ import asyncio
 from bs4 import BeautifulSoup
 import sqlite3
 import time
-from util import gen_search_res
+from util import gen_search_res, weekToChinese
 
 
 async def load_into_db(year="112", semester="2"):
@@ -58,7 +58,9 @@ async def selectdb(
     tchnm="",
     week="",
 ):
-
+    print(week)
+    weekch = weekToChinese(week)
+    print(weekch)
     conn = sqlite3.connect("database.sqlite3")
     cursor = conn.cursor()
     query = """
@@ -84,6 +86,7 @@ async def selectdb(
 
     query += f" AND 課程名稱 like '%{crsnm}%'"
     query += f" AND 教師姓名 like '%{tchnm}%'"
+    query += f" AND 上課節次地點 like '%({weekch}) %'"
 
     cursor.execute(query)
     res = cursor.fetchall()

@@ -47,7 +47,6 @@
         <select id="week">
           <option value></option>
           <option value="1">星期一</option>
-          <option value="1">星期一</option>
           <option value="2">星期二</option>
           <option value="3">星期三</option>
           <option value="4">星期四</option>
@@ -202,7 +201,7 @@
           dataJSON["semester"] = $('#semester').find(':selected').text();
           dataJSON["crsclass"] = $('#crsclass').find(':selected').text();
           dataJSON["crslimit"] = $('#crslimit').find(':selected').text();
-          dataJSON["week"] = $('#week').find(':selected').text();
+          dataJSON["week"] = $('#week').find(':selected').val();
           dataJSON["isAllEng"] = $('#isAllEng').find(':selected').text();
           dataJSON["isDisLearn"] = $('#isDisLearn').find(':selected').text();
           dataJSON["crsid"] = $('#crsid').val();
