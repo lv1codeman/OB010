@@ -11,6 +11,8 @@
 </head>
 
 <body>
+
+  <!-- <button class="btn btn-primary" id="gatherClsBtn">取得班級資料</button> -->
   <div class="container">
     <p>請先取得學年學期的資料，再開始查詢，否則預設為112學年度第2學期的資料。</p>
     <div class="grid-container">
@@ -46,7 +48,7 @@
         <label for="crsclass">開課班別</label>
         <select id="crsclass">
           <!-- 由OB010導入 -->
-          <option value></option>
+          <option value="space" selected></option>
           <option value="輔碩二">輔碩二</option>
         </select>
       </div>
@@ -152,8 +154,36 @@
             $('#result').text('Error: ' + errorMessage);
           }
         });
-
         $('#resultTable').hide()
+
+        $("#year,#semester").change(function () {
+          console.log('gatherClsBtn clicked!')
+          $.ajax({
+            url: 'http://webapt.ncue.edu.tw/DEANV2/Other/ob010/GetJson_ddl_scj_cls_id' + '?year=' + $('#year').val() + '&smester=' + $('#semester').val() + '&CLS_BRANCH=' + 'D',
+            type: "Get",
+            dataType: "json",
+            success: SetValue
+          });
+        });
+        function SetValue(data) {
+          console.log('SetValue start...')
+          console.log(data)
+          //取得已設定班級
+          var selected = $('#crsclass option:selected').val();
+          console.log('selected=' + selected)
+          //清空舊班級
+          $('#crsclass').empty();
+          for (var i = 0; i < data.length; i++) {
+            $('#crsclass')
+              .append($("<option></option>")
+                .attr("value", data[i].Value)
+                .text(data[i].Text));
+          }
+          //設定 上次選定班級
+          $('#crsclass option[value=' + selected + ']').attr('selected', true);
+        }
+
+
         $('#clearBtn').click(function () {
           $('#resultTable').hide();
           $('#crsclass,#crslimit,#week,#isAllEng,#isDisLearn').val('');
